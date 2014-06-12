@@ -27,6 +27,9 @@
     }
   ],
   "main": "./lib/pijaz_api",
+  "directories": {
+      "lib": "./lib"
+  },
   "dependencies": {
     "request": "2.34.0",
     "underscore": "1.6.0",
