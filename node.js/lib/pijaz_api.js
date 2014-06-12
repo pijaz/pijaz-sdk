@@ -600,7 +600,7 @@ Product.prototype.saveToFile = function(filepath, additionalParams, callback) {
  * object.
  *
  * Parameters:
- *   response: The request response object.
+ *   response: Required. The request response object.
  *   additionalParams: Optional. An object of additional render parameters to be
  *   used for this request only.
  *   callback: Optional. A function to call after saving the file. The callback
