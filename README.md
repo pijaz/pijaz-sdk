@@ -3,19 +3,24 @@ pijaz-sdk
 
 This software development kit allows end users to leverage the [Pijaz](http://pijaz.com) Synthesizer Platform to produce custom digital products.
 
+
 ### Initial platform setup
+
 
 ##### Registration
 
 To use the platform you must first register on our [Developer site](http://developer.pijaz.com).
 
+
 ##### Creating a client application
 
 Visit the [Application manager](http://developer.pijaz.com/#manage-app). Click on the 'Create app' button, give your application a name and description, then save it. Once saved, click on the 'Generate' button for the created application, which will generate an API key.
 
+
 ##### Creating themes
 
 Custom themes are created and registered in our [Theme designer](http://developer.pijaz.com/#theme-designer). The easiest way to get started is by clicking the 'Create sample workflows' button, which will appear at the top of the theme designer form if you haven't created any themes yet.
+
 
 ### Supported languages
 
@@ -25,9 +30,11 @@ The SDK currently supports the following languages:
 
 More information about each supported language can be found in the README file under each language's subdirectory.
 
+
 ### API
 
 The API is fairly straightforward. All the class methods needed to start using the API are documented here, consult the code if you want to dig deeper. Also, note that although a best effort has been made to keep the API consistent across languages, implementation details may vary. Consult the README for the language and/or have a look at the example code.
+
 
 #### Class: ServerManager
 
@@ -49,6 +56,7 @@ The class is instantiated with a single argument, an object with the following k
  * **apiVersion**: *Optional*. The API version to use. Currently, only version 1
    is supported. Default: 1
 
+
 #### Class: Product
 
 Manages a renderable product.
@@ -62,11 +70,13 @@ The class is instantiated with a single argument, an object with the following k
    * **font**: Font to use.
    * **quality**: Image quality to produce (0-100).
 
+
 ###### Method: clearRenderParameters()
 
 Clear out all current render parameters.
 
 Any parameters currently stored with the product, including those passed when the product was instantiated, are cleared.
+
 
 ###### Method: setRenderParameter(key, newValue)
 
@@ -79,6 +89,7 @@ Parameters:
 
 Optionally an object of parameter key/value pairs can be passed as the first argument, and each pair will be added.
 
+
 ###### Method: getRenderParameter(key)
 
 Retrieve a render parameter.
@@ -87,6 +98,7 @@ Parameters:
 
  * **key**: The parameter name.
 
+
 ###### Method: generateUrl(additionalParams)
 
 Build a fully formed URL which can be used to make a request for the product from a rendering server.
@@ -94,6 +106,7 @@ Build a fully formed URL which can be used to make a request for the product fro
 Parameters:
 
  * **additionalParams**: *Optional*. An object of additional render parameters to be used for this request only.
+
 
 ###### Method: saveToFile(filepath, additionalParams)
 
@@ -106,6 +119,7 @@ Parameters:
  * **filepath**: *Required*. The full file path.
  * **additionalParams**: *Optional*. An object of additional render parameters to be used for this request only.
 
+
 ###### Method: serve(additionalParams)
 
 Convenience method for serving a product directly to a browser.
@@ -115,6 +129,7 @@ This takes care of generating the render URL, making the request to the render s
 Parameters:
 
  * **additionalParams**: *Optional*. An object of additional render parameters to be used for this request only.
+
 
 ### Code examples
 
