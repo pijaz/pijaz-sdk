@@ -4,6 +4,7 @@ var https = require('https');
 var uuid = require('uuid');
 var request = require('request');
 var fs = require('fs');
+var simplequeue = require('simplequeue');
 
 var DEFAULT_RENDER_SERVER = 'http://render.pijaz.com/';
 var DEFAULT_API_SERVER = 'http://api.pijaz.com/';
@@ -257,7 +258,7 @@ ServerManager.prototype._processGetTokenProc = function(inParameters, err, json)
 ServerManager.prototype._buildRenderServerQueryParams = function(inParameters) {
     var accessInfo = inParameters.product.getAccessInfo();
 
-    var params = _.extend(accessInfo.renderAccessParameters, inParameters.renderParameters);
+    var params = _.extend(_.clone(accessInfo.renderAccessParameters), inParameters.renderParameters);
     return params;
 }
 
@@ -414,6 +415,8 @@ var Product = function(inParameters) {
 
   this.parameters = _.extend(defaultParams, inParameters);
   this.productPropertyDefaults = this.parameters.productPropertyDefaults || {};
+  this.renderQueue = simplequeue.createQueue();
+  this.renderQueueActive = false;
 }
 
 /**
@@ -536,21 +539,39 @@ Product.prototype.generateUrl = function(callback, additionalParams) {
   additionalParams = _.isEmpty(additionalParams) ? {} : additionalParams;
   var finalParams = this.setFinalParams(additionalParams);
 
-  this.parameters.serverManager.buildRenderCommand({
-    product: this,
+  var queueItem = {
     renderParameters: finalParams,
-    callback: _.bind(this._generateUrlCallback, this, callback),
-  });
+    callback: callback,
+  };
+
+  this.renderQueue.putMessage(queueItem);
+  this._dequeue();
+}
+
+Product.prototype._dequeue = function() {
+  if (this.renderQueueActive == false) {
+    var queueItem = this.renderQueue.getMessageSync();
+    if (queueItem != null) {
+      this.renderQueueActive = true;
+      this.parameters.serverManager.buildRenderCommand({
+        product: this,
+        renderParameters: queueItem.renderParameters,
+        callback: _.bind(this._generateUrlCallback, this, queueItem.callback),
+      });
+    }
+  }
 }
 
 Product.prototype._generateUrlCallback = function(callback, err, params) {
   if (err) {
-    return callback(err, params);
+    callback(err, params);
   }
   else {
     var url = this.parameters.serverManager.buildRenderServerUrlRequest(params);
-    return callback(null, url);
+    callback(null, url);
   }
+  this.renderQueueActive = false;
+  this._dequeue();
 }
 
 /**
@@ -637,7 +658,7 @@ Product.prototype.serve = function(response, additionalParams, callback) {
 Product.prototype.setFinalParams = function(additionalParams) {
   var finalParams;
   if (_.isObject(additionalParams)) {
-    finalParams = _.extend( this.parameters.renderParameters, additionalParams )
+    finalParams = _.extend( _.clone(this.parameters.renderParameters), additionalParams )
   } else {
     finalParams = this.parameters.renderParameters;
   }
