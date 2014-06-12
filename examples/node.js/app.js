@@ -13,31 +13,19 @@ var serverOptions = {
 }
 var server = new pijaz.ServerManager(serverOptions);
 
-
-var productFactory = function() {
-  // Set up the product class.
-  productOptions = {
-    serverManager: server,
-    workflowId: config.workflowId,
-  }
-  var product = new pijaz.Product(productOptions);
-
-  // Any user-generated product must include the 'xml' render parameter, which
-  // is the fully qualified URL to the XML file used to generate the product.
-  product.setRenderParameter({
-    xml: config.workflowXmlUrl,
-  });
-
-  return product;
+// Set up the product class.
+productOptions = {
+  serverManager: server,
+  workflowId: config.workflowId,
 }
+var product = new pijaz.Product(productOptions);
 
-var urlProduct = productFactory();
-
-// Other render parameters declared in the product's XML can also be supplied,
-// if they are not, then default values will be used.
-urlProduct.setRenderParameter({
-  message: 'World',
-  color: 'black',
+// Any user-generated product must include the 'xml' render parameter, which
+// is the fully qualified URL to the XML file used to generate the product.
+// Using setRenderParameter() ensures it will be included in all product
+// generation requests.
+product.setRenderParameter({
+  xml: config.workflowXmlUrl,
 });
 
 // Use the generateUrl method to build a fully qualified URL for retrieving the
@@ -50,9 +38,15 @@ var urlCallback = function(err, url) {
     console.log("Product URL generated: " + url);
   }
 }
-urlProduct.generateUrl(urlCallback);
-
-var fileProduct = productFactory();
+// Other render parameters declared in the product's XML can also be supplied,
+// if they are not, then default values will be used. Passing them as an
+// argument to generateUrl means these parameters will only be used for this
+// generation request.
+var productOptions = {
+  message: 'world',
+  color: 'black',
+}
+product.generateUrl(urlCallback, productOptions);
 
 // The saveToFile method provides a convenient way to save a product to a file.
 var filepath = config.filepath;
@@ -70,9 +64,7 @@ var fileProductOptions = {
   message: 'world file',
   color: 'yellow',
 }
-fileProduct.saveToFile(filepath, fileProductOptions, fileCallback);
-
-var requestProduct = productFactory();
+product.saveToFile(filepath, fileProductOptions, fileCallback);
 
 // Global request listener for our example server.
 var testRequest = function (req, resp) {
@@ -92,7 +84,7 @@ var testRequest = function (req, resp) {
     message: 'world request',
     color: 'purple',
   }
-  requestProduct.serve(resp, requestProductOptions, requestCallback);
+  product.serve(resp, requestProductOptions, requestCallback);
 }
 
 // Fire up the local example server.
