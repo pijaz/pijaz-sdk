@@ -1,0 +1,38 @@
+{
+  "name": "pijaz-sdk",
+  "version": "0.0.1",
+  "description": "Software developement kit for the Pijaz synthesizer platform",
+  "keywords": [
+    "pijaz",
+    "developer",
+    "image",
+    "synthesizer"
+  ],
+  "homepage": "http://developer.pijaz.com/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pijaz/pijaz-sdk.git"
+  },
+  "bugs": {
+    "url": "http://github.com/pijaz/pijaz-sdk/issues"
+  },
+  "author": {
+    "name": "Chad Phillips",
+    "email": "chad@pijaz.com"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "main": "./lib/pijaz_api",
+  "dependencies": {
+    "request": "2.34.0",
+    "underscore": "1.6.0",
+    "uuid": "1.4.1"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "pijaz-sdk-example",
+  "version": "0.0.1",
+  "description": "Example node.js server utilizing the Pijaz Synthesizer Platform library.",
+  "keywords": [
+    "pijaz",
+    "developer",
+    "image",
+    "synthezier"
+  ],
+  "homepage": "http://developer.pijaz.com/",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "dependencies": {
+    "request": "2.34.0",
+    "underscore": "1.6.0",
+    "pijaz-sdk": "0.0.1"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  }
+}
