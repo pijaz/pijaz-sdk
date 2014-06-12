@@ -5,7 +5,7 @@
  * applications.
  */
 // App ID.
-exports.appId = ;
+exports.appId = '';
 // API key.
 exports.apiKey = '';
 

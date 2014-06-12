@@ -4,6 +4,22 @@ var request = require('request');
 var http = require('http');
 var config = require('./config');
 
+// Some sanity checks.
+var checkConfig = function(key) {
+  var value = config[key];
+  if (!_.isString(value) || _.isEmpty(value)) {
+    throw("Invalid config, missing value for parameter '" + key + "', must be a non-empty string. Edit config.js to correct the issue.");
+  }
+}
+var keys = [
+  'appId',
+  'apiKey',
+  'workflowId',
+  'workflowXmlUrl',
+  'filepath',
+];
+_.each(keys, checkConfig);
+
 // Set up the server manager class.
 var serverOptions = {
   appId: config.appId,
