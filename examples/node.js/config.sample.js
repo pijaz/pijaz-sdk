@@ -1,7 +1,7 @@
 /**
  * Pijaz client application settings.
  *
- * Visit developer.pijaz.com/#manage-apps to create and edit client
+ * Visit http://developer.pijaz.com/#manage-apps to create and edit client
  * applications.
  */
 // App ID.
@@ -13,7 +13,7 @@ exports.apiKey = '';
 /**
  * Product settings.
  *
- * Visit developer.pijaz.com/#theme-designer to create and edit platform
+ * Visit http://developer.pijaz.com/#theme-designer to create and edit platform
  * products.
  */
 // Workflow ID.
