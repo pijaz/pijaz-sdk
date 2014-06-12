@@ -43,6 +43,6 @@ exports.port = 8000;
  */
 exports.pijaz = {};
 // Fully qualified URL of the rendering server, include the trailing slash.
-exports.pijaz.renderServer = 'http://localhost:4002/';
+exports.pijaz.renderServer = 'http://render.pijaz.com/';
 // Fully qualified URL of the API server, include the trailing slash.
-exports.pijaz.apiServer = 'http://localhost:4001/';
+exports.pijaz.apiServer = 'http://api.pijaz.com/';
