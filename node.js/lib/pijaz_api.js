@@ -30,6 +30,8 @@ var SERVER_REQUEST_ATTEMPTS = 2;
  *   refreshFuzzSeconds: Optional. Number of seconds to shave off the lifetime
  *     of a rendering access token, this allows a smooth re-request for a new
  *     set of access params. Default: 10
+ *   apiVersion: Optional. The API version to use. Currently, only version 1
+ *     is supported. Default: 1
  */
 var ServerManager = function(inParameters) {
   this.apiVersion = 1;
@@ -390,7 +392,7 @@ ServerManager.prototype.currentTimestamp = function() {
 /**
  * Class: Product
  *
- * Manages one Product.
+ * Manages a renderable product.
  *
  * Parameters:
  *
@@ -403,7 +405,7 @@ ServerManager.prototype.currentTimestamp = function() {
  *       font: Font to use.
  *       halign: Horizontal justification (left, center, right, full).
  *       valign: Vertical justification (top, middle, bottom, full, even).
- *       quality: JPEG quality to product (0-100).
+ *       quality: Image quality to produce (0-100).
  */
 var Product = function(inParameters) {
   var defaultParams = {
@@ -440,6 +442,9 @@ Product.prototype.setWorkflowId = function(newWorkflowId) {
  * Method: clearRenderParameters
  *
  * Clear out all current render parameters.
+ *
+ * Any parameters currently stored with the product, including those passed
+ * when the product was instantiated, are cleared.
  */
 Product.prototype.clearRenderParameters = function() {
   this.parameters.renderParameters = {};
@@ -524,7 +529,8 @@ Product.prototype.getRenderParameter = function(key) {
  * Parameters:
  *   callback: Required. A function to call after generating the URL. The
  *     callback is passed the URL.
- *   additionalParams: An object of additional render parameters.
+ *   additionalParams: An object of additional render parameters to be used
+ *     for this request only.
  */
 Product.prototype.generateUrl = function(callback, additionalParams) {
   additionalParams = _.isEmpty(additionalParams) ? {} : additionalParams;
@@ -556,10 +562,11 @@ Product.prototype._generateUrlCallback = function(callback, err, params) {
  * render server for the product, and saving to a file.
  *
  * Parameters:
- *   filepath: The full file path.
- *   additionalParams: An object of additional render parameters.
- *   callback: A function to call after saving the file. The callback is
- *     passed the string 'success' upon successful file save.
+ *   filepath: Required. The full file path.
+ *   additionalParams: Optional. An object of additional render parameters to be
+ *   used for this request only.
+ *   callback: Optional. A function to call after saving the file. The callback
+ *   is passed the string 'success' upon successful file save.
  */
 Product.prototype.saveToFile = function(filepath, additionalParams, callback) {
   var _callback = function(err, url) {
@@ -594,9 +601,10 @@ Product.prototype.saveToFile = function(filepath, additionalParams, callback) {
  *
  * Parameters:
  *   response: The request response object.
- *   additionalParams: An object of additional render parameters.
- *   callback: A function to call after saving the file. The callback is
- *     passed the string 'success' upon successful file save.
+ *   additionalParams: Optional. An object of additional render parameters to be
+ *   used for this request only.
+ *   callback: Optional. A function to call after saving the file. The callback
+ *   is passed the string 'success' upon successful file save.
  */
 Product.prototype.serve = function(response, additionalParams, callback) {
   var _callback = function(err, url) {
