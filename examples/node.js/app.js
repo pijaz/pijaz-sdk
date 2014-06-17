@@ -1,3 +1,9 @@
+//This node.js app demonstrates three ways to generate an image via a pijaz product workflow:
+//
+//   1. As an image served to http://localhost:8000
+//   2. As a url that can then be used in places like an <img> src tag.
+//   3. As a saved temporary file
+
 var _ = require('underscore');
 var pijaz = require('pijaz-sdk');
 var request = require('request');
@@ -51,7 +57,7 @@ var urlCallback = function(err, url) {
     console.log("Product URL generation error: " + String(err));
   }
   else {
-    console.log("Product URL generated: " + url);
+    console.log("Product URL to generate image (e.g. can be used as an <img> source tag): " + url);
   }
 }
 // Other render parameters declared in the product's XML can also be supplied,
@@ -96,6 +102,9 @@ var testRequest = function (req, resp) {
     }
     console.log(message);
   }
+  
+  // Note that product options could easily be supplied by url parameters 
+  // or other dynamic sources
   var requestProductOptions = {
     message: 'world request',
     color: 'purple',
