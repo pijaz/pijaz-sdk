@@ -1,8 +1,21 @@
 pijaz-sdk
 =========
 
+Welcome to the pijaz SDK.  
+
 This software development kit allows end users to leverage the [Pijaz](http://pijaz.com) Synthesizer Platform to produce custom digital products.
 
+### Introduction
+
+A pijaz digital product (or simply 'product' or 'theme') refers to one cloud workflow that produces variations of one type of output data stream.  A typical product can produce image files that are personalized with a variable message. However products can produce anything including images, videos, text, or json data.
+
+Each product is described by an XML document. Adding a new product means producing a new XML document and submitting it to the pijaz server to store in the database.  
+
+Some pijaz products are considered public where anyone is allowed to ask the pijaz servers to produce versions of it.  Most products provided by pijaz are considered public.  When you produce your own products, you are able to make them private or public.  Producing private products requires being authenticated with developer credentials.  This would typically be accomplished via server-to-server communications.
+
+### Instant gratification:  Using public pijaz products
+
+To see a simple example of creating personalized images from public products, open the examples/example.html file in a browser and try a few messages.  Look at the html source to see how the page uses the pijaz javascript libraries to communicate with the pijaz cloud servers.
 
 ### Initial platform setup
 
