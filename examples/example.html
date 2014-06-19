@@ -1,67 +1,67 @@
 <html>
 <head>
-	<title>Pijaz - Simple Demo</title>
+  <title>Pijaz - Simple Demo</title>
 
-	<script src="http://www.pijaz.com/common/js/underscore.js" type="text/javascript" ></script>
-	<script src="http://www.pijaz.com/common/js/jquery-2.0.3.js" type="text/javascript" ></script>
-	<script src="http://www.pijaz.com/common/js/iclass.js" type="text/javascript"></script>
-	<script src="http://www.pijaz.com/common/js/purl.js" type="text/javascript"></script>
-	<script src="http://www.pijaz.com/common/js/pijaz_core.js" type="text/javascript"></script>
-	<script src="http://www.pijaz.com/common/js/pijaz_controls.js" type="text/javascript"></script>
+  <script src="http://www.pijaz.com/common/js/underscore.js" type="text/javascript" ></script>
+  <script src="http://www.pijaz.com/common/js/jquery-2.0.3.js" type="text/javascript" ></script>
+  <script src="http://www.pijaz.com/common/js/iclass.js" type="text/javascript"></script>
+  <script src="http://www.pijaz.com/common/js/purl.js" type="text/javascript"></script>
+  <script src="http://www.pijaz.com/common/js/pijaz_core.js" type="text/javascript"></script>
+  <script src="http://www.pijaz.com/common/js/pijaz_controls.js" type="text/javascript"></script>
 
-	<script type="text/javascript">
-	<!--//--><![CDATA[//><!--
+  <script type="text/javascript">
+  <!--//--><![CDATA[//><!--
 
-    var product; // to hold one pijaz work product
+  var product; // to hold one pijaz work product
 
-	$(function() {
-		
-		// Default parameter values for the pijaz synthsizer
-		// These can be changed programmatically to alter the image.
-	    var initialDefaults = {
-	      message: "Hello World",		// message to show.  used by all example products
-		  
-		  // All of the remaining parameters are only used by the 'torn paper' product.
-	      font: "African",				// try: Helvetica, Airstream, ArmyChalk, BALL, Ballade, Splurge
-	      pitch: 30,					// spiral text pitch. 
-	      revolutions: 35,				// text revolution count. 
-	      'background-point-size': 24,	// point size for spiral text
-	      'title-point-size': 90		// point size for foreground text
-	    };
+  $(function() {
+    
+    // Default parameter values for synthesizing a pijaz product. Every
+	// product can support an arbitrary number of user configurable parameters.
+    // These values can be changed manually or programmatically to alter the image.
+    var initialDefaults = {
+      message: "Hello World",       // message to show.  used by all example products
+      
+      // These other parameters are only used by the 'torn paper' product.
+      font: "African",              // try: Helvetica, Airstream, ArmyChalk, BALL, Ballade, Splurge
+      pitch: 30,                    // spiral text pitch. 
+      revolutions: 35,              // text revolution count. 
+      'background-point-size': 24,  // point size for spiral text
+      'title-point-size': 90        // point size for foreground text
+    };
 
-	    product = new PijazProduct({
-	      serverManager: new PijazServerManager({}),
-	      previewManager: new PijazPreviewManager({ previewNode: $("#pijaz-preview")}),
-	      renderParameters: initialDefaults,
-	      workflowId: "web.12"
-	    });
+    product = new PijazProduct({
+      serverManager: new PijazServerManager({}),
+      previewManager: new PijazPreviewManager({ previewNode: $("#pijaz-preview")}),
+      renderParameters: initialDefaults,
+      workflowId: "com.pijaz.workflow.web.12"          // Initial workflow ID. 
+      });
 
-		// Controls manage all of the necessary communications to the pijaz servers
-		// when a control value changes. The key is both the parameter name supported
-		// by the product and the id of the control element to change that key
-		//
-		// Try adding controls for some of the other parameters above. Remember
-		// to add a control in the HTML code below as well.
-		
-	    product.addSimpleControl({ key : 'message' });
-	    product.addSimpleControl({ key : 'workflowId' });
-	    product.updatePreview();  // draw initial product using default values.
-	  }
-	);
-	//--><!]]>
-	</script>
+    // Controls manage all of the necessary communications to the pijaz servers
+    // when a control value changes. The key is both the parameter name supported
+    // by the product and the id of the control element to change that key
+    //
+    // Try adding controls for some of the other parameters above. Remember
+    // to add a control in the HTML code below as well.
+    
+    product.addSimpleControl({ key : 'message' });
+    product.addSimpleControl({ key : 'workflowId' });
+    product.updatePreview();  // draw initial product using default values.
+    }
+  );
+  //--><!]]>
+  </script>
 
 </head>
 <body>
-	<select id="workflowId">
-		<!-- select one of several of the default public products available on the server -->
-		<option value="web.12">torn paper</option>
-		<option value="web.13">graffiti</option>
-		<option value="web.14">beige paper</option>
-		<option value="web.15">old sign on bricks</option>
-	</select>
-	<textarea id="message" type="text" name="message" rows="1" cols="50">Hello World</textarea>
-	<div id="pijaz-preview"></div>
+  <select id="workflowId">
+    <!-- select one of several of the default public products available on the server -->
+    <option value="com.pijaz.workflow.web.12">torn paper</option>
+    <option value="com.pijaz.workflow.web.13">graffiti</option>
+    <option value="com.pijaz.workflow.web.14">beige paper</option>
+    <option value="com.pijaz.workflow.web.15">old sign on bricks</option>
+  </select>
+  <textarea id="message" type="text" name="message" rows="1" cols="50">Hello World</textarea>
+  <div id="pijaz-preview"></div>
 </body>
 </html>
-
