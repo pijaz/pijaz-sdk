@@ -153,6 +153,15 @@ The examples directory contains example code for each of the languages the SDK s
 
 If you wish to communicate direclty with the api server and render servers, this section describes the available services.  Most are accomplished via http GET requests.
 
+The most typical scenario is this:
+
+1. Get render token from API server for a specific workflow:
+http://api.pijaz.com/get-token
+
+2. Render an image on render server farm using that token:
+http://render.pijaz.com/render-image
+
+
 ### API server commands
 
 #####Get render server token
@@ -169,7 +178,7 @@ workflow         A workflow id
 app_id           Should be your app id created at developer.pijaz.com
 api_version      1
 request_id       Unique callback id to correlate callback to request
-_jsonp_callback  Callback function name
+_jsonp_callback  Callback function name (to deal with cross domain issues)
 
 Example:
 
@@ -369,6 +378,25 @@ command          version
 Example:
 
 ​http://render.pijaz.com/execute-command?command=version
+
+
+#####Execute a workflow product that returns an image
+
+Endpoint: ​http://render.pijaz.com/render-image
+
+Parameters:
+
+Key              Value
+---------        -----------------
+api_version      1
+workflow         The workflow id (shown in the theme designer for each workflow)
+watermark        true | false
+expire           from api.pijaz.com/get-token response
+token            from api.pijaz.com/get-token response
+
+plus any other render parameters understood by the workflow such as "message=hello world"
+
+http://render.pijaz.com/render-image?api_version=1&uid=0&app_id=10&workflow=web.17&watermark=false&expire=1403244171&token=8ed74e3bdda86c9606cede3f6d64c856e25f7270&message=hello+world
 
 
 #####Get workflows
