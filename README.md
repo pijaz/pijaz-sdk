@@ -216,7 +216,7 @@ Parameters:
 | Key            | Value             |
 | ---------      | ----------------- |
 | api_version    | 1 |
-| type           | allowed values:  com.pijaz.private || com.pijaz.public |
+| type           | allowed values:  com.pijaz.private OR com.pijaz.public |
 | title          | title associated with workflow |
 | xml            | xml for workflow |
 
@@ -390,7 +390,7 @@ Parameters:
 | ---------      | ----------------- |
 | api_version    | 1 |
 | workflow       |  The workflow id (shown in the theme designer for each workflow)| 
-| watermark      |  true || false | 
+| watermark      |  true OR false | 
 | expire         |  from api.pijaz.com/get-token response | 
 | token          |  from api.pijaz.com/get-token response | 
 
