@@ -172,13 +172,13 @@ Endpoint: http://api.pijaz.com/get-token
 
 Parameters:
 
-Key              Value
----------        -----------------
-workflow         A workflow id
-app_id           Should be your app id created at developer.pijaz.com
-api_version      1
-request_id       Unique callback id to correlate callback to request
-_jsonp_callback  Callback function name (to deal with cross domain issues)
+| Key             | Value             |
+| ---------       | ----------------- |
+| workflow        | A workflow id |
+| app_id          | Should be your app id created at developer.pijaz.com |
+| api_version     | 1 |
+| request_id      | Unique callback id to correlate callback to request |
+| _jsonp_callback | Callback function name (to deal with cross domain issues) |
 
 Example:
 
@@ -196,9 +196,9 @@ End point:  http://api.pijaz.com/user-workflow/workflows
 
 Parameters:
 
-Key              Value
----------        -----------------
-api_version      1
+| Key            | Value             |
+| ---------      | ----------------- |
+| api_version    | 1 |
 
 Example:
 
@@ -213,12 +213,12 @@ End point:  http://api.pijaz.com/user-workflow/workflows
 
 Parameters:
 
-Key              Value
----------        -----------------
-api_version      1
-type             allowed values:  com.pijaz.private | com.pijaz.public
-title            title associated with workflow
-xml              xml for workflow
+| Key            | Value             |
+| ---------      | ----------------- |
+| api_version    | 1 |
+| type           | allowed values:  com.pijaz.private || com.pijaz.public |
+| title          | title associated with workflow |
+| xml            | xml for workflow |
 
 
 #####Update specified workflow
@@ -229,12 +229,12 @@ End point:  http://api.pijaz.com/user-workflow/workflows/[[workflow_id]]
 
 Parameters:
 
-Key              Value
----------        -----------------
-api_version      1
-type             allowed values:  com.pijaz.private | com.pijaz.public
-title            title associated with workflow
-xml              xml for workflow
+| Key            | Value             |
+| ---------      | ----------------- |
+| api_version    | 1 |
+| type           |  allowed values:  com.pijaz.private || com.pijaz.public |
+| title          |   title associated with workflow |
+| xml            |  xml for workflow |
 
 
 #####Get detailed information for specified workflow
@@ -245,9 +245,9 @@ Http method: GET
 
 Parameters:
 
-Key              Value
----------        -----------------
-api_version      1
+| Key            | Value             |
+| ---------      | ----------------- |
+| api_version    | 1 |
 
 Example:
 
@@ -262,9 +262,9 @@ Http method: DELETE
 
 Parameters:
 
-Key              Value
----------        -----------------
-api_version      1
+| Key            | Value             |
+| ---------      | ----------------- |
+| api_version    | 1 |
 
 Example:
 
@@ -279,9 +279,9 @@ Http method: GET
 
 Parameters:
 
-Key              Value
----------        -----------------
-api_version      1
+| Key            | Value             |
+| ---------      | ----------------- |
+| api_version    | 1 |
 
 Example:
 
@@ -371,9 +371,9 @@ Endpoint: ​http://render.pijaz.com/execute-command
 
 Parameters:
 
-Key              Value
----------        -----------------
-command          version
+| Key            | Value             |
+| ---------      | ----------------- |
+| command        | version |
 
 Example:
 
@@ -386,13 +386,13 @@ Endpoint: ​http://render.pijaz.com/render-image
 
 Parameters:
 
-Key              Value
----------        -----------------
-api_version      1
-workflow         The workflow id (shown in the theme designer for each workflow)
-watermark        true | false
-expire           from api.pijaz.com/get-token response
-token            from api.pijaz.com/get-token response
+| Key            | Value             |
+| ---------      | ----------------- |
+| api_version    | 1 |
+| workflow       |  The workflow id (shown in the theme designer for each workflow)| 
+| watermark      |  true || false | 
+| expire         |  from api.pijaz.com/get-token response | 
+| token          |  from api.pijaz.com/get-token response | 
 
 plus any other render parameters understood by the workflow such as "message=hello world"
 
@@ -407,10 +407,11 @@ Endpoint: ​http://render.pijaz.com/execute-command
 
 Parameters:
 
-Key              Value
----------        -----------------
-command          get-workflows
-api_version      1
+| Key            | Value             |
+| ---------      | ----------------- |
+| api_version    | 1 |
+| command        | get-workflows |
+
 
 Example:
 
@@ -425,11 +426,11 @@ Endpoint: ​http://render.pijaz.com/execute-command
 
 Parameters:
 
-Key              Value
----------        -----------------
-command          get-widget-metadata
-api_version      1
-type             workflow identifier
+| Key            | Value             |
+| ---------      | ----------------- |
+| api_version    | 1 |
+| command        | get-widget-metadata |
+| type           | workflow identifier |
 
 Example:
 
@@ -445,11 +446,12 @@ Endpoint: ​http://render.pijaz.com/execute-command
 
 Parameters:
 
-Key              Value
----------        -----------------
-command          reload-workflow
-api_version      1
-type             workflow identifier
+| Key            | Value             |
+| ---------      | ----------------- |
+| api_version    | 1 |
+| command        | reload-workflow |
+| type           | workflow identifier |
+
 
 Example:
 
