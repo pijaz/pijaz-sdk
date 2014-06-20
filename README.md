@@ -182,9 +182,9 @@ Parameters:
 
 Example:
 
-...
+```
 http://api.pijaz.com/get-token?workflow=web.17&app_id=10&api_version=1&request_id=1ab64ad4-3ac0-4424-ade3-552e6864d995&_jsonp_callback=_prototypeJSONPCallback_2
-...
+```
 
 
 ####User workflow requests
@@ -204,9 +204,9 @@ Parameters:
 
 Example:
 
-...
+```
 http://api.pijaz.com/user-workflow/workflows?api_version=1
-...
+```
 
 
 #####Create a new workflow
@@ -255,9 +255,9 @@ Parameters:
 
 Example:
 
-...
+```
 http://api.pijaz.com/user-workflow/workflows/[[workflow_id]]?api_version=1
-...
+```
 
 
 #####Delete specified workflow
@@ -274,9 +274,9 @@ Parameters:
 
 Example:
 
-...
+```
 http://api.pijaz.com/user-workflow/workflows/[[workflow_id]]?api_version=1
-...
+```
 
 
 #####Get xml for specified workflow
@@ -293,9 +293,9 @@ Parameters:
 
 Example:
 
-...
+```
 http://api.pijaz.com/user-workflow/workflows/[[workflow_id]]/xml
-...
+```
 
 
 
@@ -332,9 +332,9 @@ http://api.pijaz.com/graph/product/[[product_id]]
 
 Example:
 
-...
+```
 http://api.pijaz.com/graph/product/2061?api_version=1
-...
+```
 
 
 #####Get product categories summary
@@ -389,9 +389,9 @@ Parameters:
 
 Example:
 
-...
+```
 ​http://render.pijaz.com/execute-command?command=version
-...
+```
 
 
 #####Execute a workflow product that returns an image
@@ -429,9 +429,9 @@ Parameters:
 
 Example:
 
-...
+```
 ​http://render.pijaz.com/execute-command?command=get-workflows&api_version=1
-...
+```
 
 #####Get workflow metadata:
 
@@ -449,9 +449,9 @@ Parameters:
 
 Example:
 
-...
+```
 ​http://render.pijaz.com/execute-command?command=get-widget-metadata&api_version=1&type=web.1
-...
+```
 
 
 #####Reload workflow:
@@ -472,8 +472,8 @@ Parameters:
 
 Example:
 
-...
+```
 ​http://render.pijaz.com/execute-command?command=reload-workflow&api_version=1&type=web.1
-...
+```
 
 
