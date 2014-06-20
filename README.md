@@ -147,3 +147,284 @@ Parameters:
 ### Code examples
 
 The examples directory contains example code for each of the languages the SDK supports.
+
+
+### Direct server APIs
+
+If you wish to communicate direclty with the api server and render servers, this section describes the available services.  Most are accomplished via http GET requests.
+
+### API server commands
+
+#####Get render server token
+
+All requests to render a media file on a render server requires a render token.  This command generates the required render token for a workflow
+
+Endpoint: http://api.pijaz.com/get-token
+
+Parameters:
+
+Key              Value
+---------        -----------------
+workflow         A workflow id
+app_id           Should be your app id created at developer.pijaz.com
+api_version      1
+request_id       Unique callback id to correlate callback to request
+_jsonp_callback  Callback function name
+
+Example:
+
+http://api.pijaz.com/get-token?workflow=web.17&app_id=10&api_version=1&request_id=1ab64ad4-3ac0-4424-ade3-552e6864d995&_jsonp_callback=_prototypeJSONPCallback_2
+
+
+####User workflow requests
+
+
+#####Get all workflows for authenticated user
+
+Http method: GET
+
+End point:  http://api.pijaz.com/user-workflow/workflows
+
+Parameters:
+
+Key              Value
+---------        -----------------
+api_version      1
+
+Example:
+
+http://api.pijaz.com/user-workflow/workflows?api_version=1
+
+
+#####Create a new workflow
+
+Http method: POST
+
+End point:  http://api.pijaz.com/user-workflow/workflows
+
+Parameters:
+
+Key              Value
+---------        -----------------
+api_version      1
+type             allowed values:  com.pijaz.private | com.pijaz.public
+title            title associated with workflow
+xml              xml for workflow
+
+
+#####Update specified workflow
+
+Http method: PUT
+
+End point:  http://api.pijaz.com/user-workflow/workflows/[[workflow_id]]
+
+Parameters:
+
+Key              Value
+---------        -----------------
+api_version      1
+type             allowed values:  com.pijaz.private | com.pijaz.public
+title            title associated with workflow
+xml              xml for workflow
+
+
+#####Get detailed information for specified workflow
+
+Get all detailed information about a specified workflow
+
+Http method: GET
+
+Parameters:
+
+Key              Value
+---------        -----------------
+api_version      1
+
+Example:
+
+http://api.pijaz.com/user-workflow/workflows/[[workflow_id]]?api_version=1
+
+
+#####Delete specified workflow
+
+Get all detailed information about a specified workflow
+
+Http method: DELETE
+
+Parameters:
+
+Key              Value
+---------        -----------------
+api_version      1
+
+Example:
+
+http://api.pijaz.com/user-workflow/workflows/[[workflow_id]]?api_version=1
+
+
+#####Get xml for specified workflow
+
+In the theme designer, each workflow shows its graph call for retrieving its xml.
+
+Http method: GET
+
+Parameters:
+
+Key              Value
+---------        -----------------
+api_version      1
+
+Example:
+
+http://api.pijaz.com/user-workflow/workflows/[[workflow_id]]/xml
+
+
+
+####Graph requests
+
+#####Get authenticated user info
+
+Retrieve the authenticated user info.
+
+Http method: GET
+
+http://api.pijaz.com/graph/me?api_version=1
+
+
+#####Get summary of all workflow products
+
+Http method: GET
+
+http://api.pijaz.com/graph/products/summary?api_version=1
+
+
+#####Get detailed info for all workflow products
+
+Http method: GET
+
+http://api.pijaz.com/graph/products/detail
+
+
+#####Get detailed info for specified product
+
+Http method: GET
+
+http://api.pijaz.com/graph/product/[[product_id]]
+
+Example:
+
+http://api.pijaz.com/graph/product/2061?api_version=1
+
+
+#####Get product categories summary
+
+Http method: GET
+
+http://api.pijaz.com/graph/categories/summary?api_version=1
+
+
+#####Get product categories detailed info
+
+Http method: GET
+
+http://api.pijaz.com/graph/categories/detail?api_version=1
+
+
+#####Get info for a single category by category id
+
+Http method: GET
+
+http://api.pijaz.com/graph/category/[[category_id]]?api_version=1
+
+
+#####Get summary info of all products for a category
+
+Http method: GET
+
+http://api.pijaz.com/graph/category/[[category_id]]/products/summary?api_version=1
+
+
+#####Get detailed info of all products for a category
+
+Http method: GET
+
+http://api.pijaz.com/graph/category/[[category_id]]/products/detail?api_version=1
+
+
+
+### Render server commands
+
+#####Get version
+
+Get the version of the currently deployed synthesizer kernel:
+
+Endpoint: ​http://render.pijaz.com/execute-command
+
+Parameters:
+
+Key              Value
+---------        -----------------
+command          version
+
+Example:
+
+​http://render.pijaz.com/execute-command?command=version
+
+
+#####Get workflows
+
+Get a list of all available workflows.
+
+Endpoint: ​http://render.pijaz.com/execute-command
+
+Parameters:
+
+Key              Value
+---------        -----------------
+command          get-workflows
+api_version      1
+
+Example:
+
+​http://render.pijaz.com/execute-command?command=get-workflows&api_version=1
+
+
+#####Get workflow metadata:
+
+Get the metadata for a specific widget or workflow.
+
+Endpoint: ​http://render.pijaz.com/execute-command
+
+Parameters:
+
+Key              Value
+---------        -----------------
+command          get-widget-metadata
+api_version      1
+type             workflow identifier
+
+Example:
+
+​http://render.pijaz.com/execute-command?command=get-widget-metadata&api_version=1&type=web.1
+
+
+#####Reload workflow:
+
+If you change the xml for a workflow, reload just that workflow in the render engine.
+
+
+Endpoint: ​http://render.pijaz.com/execute-command
+
+Parameters:
+
+Key              Value
+---------        -----------------
+command          reload-workflow
+api_version      1
+type             workflow identifier
+
+Example:
+
+​http://render.pijaz.com/execute-command?command=reload-workflow&api_version=1&type=web.1
+
+
