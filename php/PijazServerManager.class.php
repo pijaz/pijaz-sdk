@@ -639,6 +639,10 @@ class Product {
    * This takes care of generating the render URL, making the request to the
    * render server for the product, and saving to a file.
    *
+   * Note that fopen_wrappers must be enabled in the PHP configuration in
+   * order for this method to work.
+   * http://php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen
+   *
    * Parameters:
    *   filepath: Required. The full file path.
    *   additionalParams: Optional. An object of additional render parameters to be
@@ -650,16 +654,10 @@ class Product {
   public function saveToFile($filepath, $additionalParams = NULL) {
     $url = $this->generateUrl($additionalParams);
     if ($url) {
-      $ch = curl_init($url);
-      $fp = fopen($filepath, 'wb');
-      if ($ch && $fp) {
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_exec($ch);
-        curl_close($ch);
-        fclose($fp);
-        return TRUE;
+      $image_data = file_get_contents($url);
+      if ($image_data !== FALSE) {
+        $result = file_put_contents($filepath, $image_data);
+        return $result !== FALSE;
       }
     }
     return FALSE;
