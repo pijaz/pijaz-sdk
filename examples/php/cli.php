@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * This example illustrates how to generate a render URL and save a product
+ * to a file from the command line.
+ */
+
 require_once('config.php');
 require_once('PijazServerManager.class.php');
 
