@@ -5,8 +5,6 @@ define("PIJAZ_API_SERVER", "http://api.pijaz.com/");
 define("PIJAZ_RENDER_SERVER", "http://render.pijaz.com/");
 define("SERVER_REQUEST_ATTEMPTS", 2);
 
-require_once('PijazLogger.class.php');
-
 /**
  * Class: ServerManager
  *
@@ -32,7 +30,6 @@ require_once('PijazLogger.class.php');
  */
 class ServerManager {
 
-  public $logger;
   public $apiServer = PIJAZ_API_SERVER;
   public $renderServer = PIJAZ_RENDER_SERVER;
   public $refreshFuzzSeconds = 10;
@@ -42,8 +39,6 @@ class ServerManager {
 
   public function __construct($inParameters) {
     $params = (object) $inParameters;
-    require_once('PijazLogger.class.php');
-    $this->logger = new PijazLogger();
     $this->appId = $params->appId;
     $this->apiKey = $params->apiKey;
     if (isset($params->apiServer)) {
@@ -324,7 +319,7 @@ class ServerManager {
     $params->commandParameters->api_version = $this->getApiVersion();
 
     // DEBUG.
-    //$this->logger->log("uuid: " . $params->commandParameters->request_id . ", command: " + $params->command);
+    //echo "uuid: " . $params->commandParameters->request_id . ", command: " . $params->command;
 
     $data = NULL;
     $query = http_build_query($params->commandParameters);
@@ -485,15 +480,12 @@ class ServerManager {
  */
 class Product {
 
-  public $logger;
   public $renderParameters;
   public $productPropertyDefaults;
   private $accessInfo;
 
   public function __construct($inParameters) {
     $params = (object) $inParameters;
-    require_once('PijazLogger.class.php');
-    $this->logger = new PijazLogger();
     $this->serverManager = $params->serverManager;
     $this->workflowId = $params->workflowId;
     if (isset($params->renderParameters)) {
