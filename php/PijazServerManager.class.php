@@ -5,6 +5,8 @@ define("PIJAZ_API_SERVER", "http://api.pijaz.com/");
 define("PIJAZ_RENDER_SERVER", "http://render.pijaz.com/");
 define("SERVER_REQUEST_ATTEMPTS", 2);
 
+require_once('PijazLogger.class.php');
+
 /**
  * Class: ServerManager
  *
@@ -298,7 +300,7 @@ class ServerManager {
    *         commandParameters:
    *           workflow: The workflow ID.
    *
-   *   commandParameters: Optional. An array of parameters. See individual
+   *   commandParameters: Optional. An object of parameters. See individual
    *     command for more information
    *   method: Optional. The HTTP request type. Default: GET
    *
@@ -309,7 +311,7 @@ class ServerManager {
    *     response data, if not, a string containing the error message.
    */
   public function sendApiCommand($inParameters) {
-    $this->_sendApiCommand($inParameters, SERVER_REQUEST_ATTEMPTS - 1);
+    return $this->_sendApiCommand($inParameters, SERVER_REQUEST_ATTEMPTS - 1);
   }
 
   private function _sendApiCommand($inParameters, $retry) {
@@ -317,14 +319,21 @@ class ServerManager {
     $url = $this->getApiServerUrl() . $params->command;
     $method = isset($params->method) ? strtoupper($params->method) : 'GET';
 
-    $params->commandParameters['app_id'] = $this->getAppId();
-    $params->commandParameters['api_key'] = $this->getApiKey();
-    $params->commandParameters['api_version'] = $this->getApiVersion();
+    $params->commandParameters->app_id = $this->getAppId();
+    $params->commandParameters->api_key = $this->getApiKey();
+    $params->commandParameters->api_version = $this->getApiVersion();
 
     // DEBUG.
-    //$this->logger->log("uuid: " . $params->commandParameters['request_id'] . ", command: " + $params->command);
+    //$this->logger->log("uuid: " . $params->commandParameters->request_id . ", command: " + $params->command);
 
-    $data = http_build_query($params->commandParameters);
+    $data = NULL;
+    $query = http_build_query($params->commandParameters);
+    if ($method == 'GET') {
+      $url .= '?' . $query;
+    }
+    else {
+      $data = $query;
+    }
     $result = $this->httpRequest($url, array(), $method, $data);
 
     $return = new stdClass();
@@ -333,7 +342,7 @@ class ServerManager {
       $json_result = $this->extractResult($result->data);
       if ($json_result->result_num == 0) {
         $return->success = TRUE;
-        $return->data = this->extractInfo($result->data);
+        $return->data = $this->extractInfo($result->data);
       }
       else {
         $return->success = FALSE;
@@ -343,7 +352,8 @@ class ServerManager {
     }
     else {
       if ($retry) {
-        $this->_sendApiCommand($inParameters, $retry--);
+        $retry--;
+        return $this->_sendApiCommand($inParameters, $retry);
       }
       else {
         $return->success = FALSE;
@@ -380,11 +390,10 @@ class ServerManager {
     if ($this->_isRenderRequestAllowed($params->product)) {
       return $this->_buildRenderServerQueryParams($params);
     } else {
-      $commandParameters = array(
-        'workflow' => $params->renderParameters->workflow,
-      );
-      if ($params->renderParameters->xml) {
-        commandParameters->xml = $params->renderParameters->xml;
+      $commandParameters = new stdClass();
+      $commandParameters->workflow = $params->renderParameters->workflow;
+      if (isset($params->renderParameters->xml)) {
+        $commandParameters->xml = $params->renderParameters->xml;
       }
       $options = new stdClass();
       $options->command = 'get-token';
@@ -404,7 +413,7 @@ class ServerManager {
     $accessInfo->timestamp = time();
     // Extract the lifetime param, no need to pass this along to the
     // rendering server.
-    $accessInfo->lifetime = parseInt($data->lifetime);
+    $accessInfo->lifetime = (int) $data->lifetime;
     unset($data->lifetime);
 
     $accessInfo->renderAccessParameters = $data;
@@ -477,8 +486,8 @@ class ServerManager {
 class Product {
 
   public $logger;
-  public $renderParameters = new stdClass();
-  public $productPropertyDefaults = new stdClass();
+  public $renderParameters;
+  public $productPropertyDefaults;
   private $accessInfo;
 
   public function __construct($inParameters) {
@@ -490,8 +499,14 @@ class Product {
     if (isset($params->renderParameters)) {
       $this->renderParameters = $params->renderParameters;
     }
+    else {
+      $this->renderParameters = new stdClass();
+    }
     if (isset($params->productPropertyDefaults)) {
       $this->productPropertyDefaults = $params->productPropertyDefaults;
+    }
+    else {
+      $this->productPropertyDefaults = new stdClass();
     }
   }
 
@@ -544,7 +559,7 @@ class Product {
    * Set the access info for the product.
    */
   public function setAccessInfo($accessInfo = NULL) {
-    if (!empty(accessInfo)) {
+    if (!empty($accessInfo)) {
       $this->accessInfo = $accessInfo;
     }
     else {
@@ -564,19 +579,21 @@ class Product {
    * Optionally an object of parameter key/value pairs can be passed as the
    * first argument, and each pair will be added.
    */
-  public function setRenderParameter($key, $newValue) {
+  public function setRenderParameter($key, $newValue = NULL) {
     if (is_object($key)) {
       foreach($key as $k => $v) {
         $this->setRenderParameter($k, $v);
       }
     }
     else {
-      if ($this->renderParameters[$key] != $newValue) {
-        if (is_null($newValue) || $newValue == $this->productPropertyDefaults[$key]) {
-          unset($this->renderParameters[$key]);
+      $param = isset($this->renderParameters->$key) ? $this->renderParameters->$key : NULL;
+      $default = isset($this->productPropertyDefaults->$key) ? $this->productPropertyDefaults->$key : NULL;
+      if ($param != $newValue) {
+        if (is_null($newValue) || $newValue == $default) {
+          unset($this->renderParameters->$key);
         }
         else {
-          $this->renderParameters[$key] = $newValue;
+          $this->renderParameters->$key = $newValue;
         }
       }
     }
@@ -591,9 +608,9 @@ class Product {
    *   key: The parameter name.
    */
   public function getRenderParameter($key) {
-    $value = $this->renderParameters[$key];
+    $value = $this->renderParameters->$key;
     if (!isset($value)) {
-      $value = $this->productPropertyDefaults[$key];
+      $value = $this->productPropertyDefaults->$key;
     }
     return $value;
   }
