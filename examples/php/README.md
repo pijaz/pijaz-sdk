@@ -26,3 +26,9 @@ See [Initial platform setup](https://github.com/pijaz/pijaz-sdk#initial-platform
 
 You should see some console output with the results of the two different products the example application produces.
 
+#### For the server script.
+
+* Make sure server.php is accessible via you PHP-enabled web server
+* Visit server.php via your web browser
+
+You should see a product rendered directly to the browser.
