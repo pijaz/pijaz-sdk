@@ -11,7 +11,7 @@ See [Initial platform setup](https://github.com/pijaz/pijaz-sdk#initial-platform
 
 ### Application configuration
 
-* Make sure PijazServerManager.class.php is in your PHP's include path.
+* Make sure Pijaz.class.php is in your PHP's include path.
 * Navigate to the same directory as this README file.
 * Copy config.sample.php to config.php
 * Edit the client application settings section of config.php, inserting the values for your configured application.

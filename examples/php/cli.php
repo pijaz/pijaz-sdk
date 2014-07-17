@@ -6,7 +6,7 @@
  */
 
 require_once('config.php');
-require_once('PijazServerManager.class.php');
+require_once('Pijaz.class.php');
 
 // Set up the server class.
 $serverOptions = new stdClass();
