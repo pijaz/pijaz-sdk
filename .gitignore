@@ -10,5 +10,6 @@ examples/browser/js/underscore.js
 examples/node.js/config.js
 examples/node.js/node_modules/
 examples/php/config.php
-examples/php/Pijaz.class.php
+examples/php/PijazProduct.class.php
+examples/php/PijazServerManager.class.php
 node.js/node_modules/
