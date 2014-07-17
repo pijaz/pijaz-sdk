@@ -1,5 +1,12 @@
 .DS_Store
 *.swp
+examples/browser/js/config.js
+examples/browser/js/iclass.js
+examples/browser/js/jquery.js
+examples/browser/js/pijaz_controls.js
+examples/browser/js/pijaz_core.js
+examples/browser/js/purl.js
+examples/browser/js/underscore.js
 examples/node.js/config.js
 examples/node.js/node_modules/
 examples/php/config.php
