@@ -7,6 +7,10 @@ examples/browser/js/pijaz_controls.js
 examples/browser/js/pijaz_core.js
 examples/browser/js/purl.js
 examples/browser/js/underscore.js
+examples/lua/config.lua
+examples/lua/pijaz.lua
+examples/lua/pijaz_product.lua
+examples/lua/pijaz_server_manager.lua
 examples/node.js/config.js
 examples/node.js/node_modules/
 examples/php/config.php
