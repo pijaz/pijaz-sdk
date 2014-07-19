@@ -7,7 +7,7 @@
  *
  * inParameters: An object with the following key/value pairs.
  *
- *   serverManager: Required. An instance of the ServerManager class.
+ *   serverManager: Required. An instance of the PijazServerManager class.
  *   workflowId: Required. The workflow ID for the product.
  *   renderParameters: Optional. An object of render parameters to be included
  *     with every render request. They depend on the product, but these are
@@ -77,7 +77,7 @@ class PijazProduct {
   }
 
   /**
-   * Method: getAccessInfo (required by ServerManager).
+   * Method: getAccessInfo (required by PijazServerManager).
    *
    * Return the access info for the product.
    */
@@ -86,7 +86,7 @@ class PijazProduct {
   }
 
   /**
-   * Method: setAccessInfo (required by ServerManager).
+   * Method: setAccessInfo (required by PijazServerManager).
    *
    * Set the access info for the product.
    */

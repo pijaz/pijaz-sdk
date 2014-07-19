@@ -366,9 +366,7 @@ class PijazServerManager {
   /**
    * Method:  buildRenderCommand
    *
-   * Manage access control for a render command, and if access can be established
-   * construct a fully formed render command to the render server and delegate
-   * this to the caller's callback function.
+   * Build the set of query parameters for a render request.
    *
    * inParameters: An object with the following key/value pairs.
    *
