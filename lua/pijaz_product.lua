@@ -67,6 +67,8 @@ end
 --- Return the access info for the product.
 --
 -- Required method for products passed to the ServerManager object.
+-- @return
+--   The access info.
 function M:getAccessInfo()
   return self.accessInfo
 end
@@ -74,12 +76,17 @@ end
 --- Retrieve a render parameter.
 --
 -- @param key: The parameter name.
+-- @return:
+--   The render parameter, or the default render parameter if not set.
 function M:getRenderParameter(key)
   local value = self.renderParameters[key] or self.productPropertyDefaults[key]
   return value
 end
 
 --- Return the workflow ID.
+--
+-- @return:
+--   The workflow ID.
 function M:getWorkflowId()
   return self.workflowId
 end

@@ -8,7 +8,7 @@ rendering service.
 PUBLIC METHODS:
 
 buildRenderCommand(inParameters)
-buildRenderServerUrlRequest(params)
+buildRenderServerUrlRequest(inParameters)
 getApiKey()
 getApiServerUrl()
 getApiVersion()
@@ -18,7 +18,7 @@ sendApiCommand(inParameters)
 
 PRIVATE METHODS:
 
-_buildRenderServerQueryParams(inParameters)
+_buildRenderServerQueryParams(params)
 _deepcopy(self, t)
 _extractInfo(self, data)
 _extractResult(self, data)
@@ -87,34 +87,57 @@ end
 
 --- Builds a fully qualified render request URL.
 --
--- @param params
+-- @param inParameters
 --   A table of query parameters for the render request.
-function M:buildRenderServerUrlRequest(params)
-  local url = self:getRenderServerUrl() .. "render-image?" .. _stringifyParameters(self, params)
+-- @return:
+--   The constructed URL.
+-- @usage srv:buildRenderServerUrlRequest(params)
+function M:buildRenderServerUrlRequest(inParameters)
+  local url = self:getRenderServerUrl() .. "render-image?" .. _stringifyParameters(self, inParameters)
   return url
 end
 
 --- Get the API key of the client application.
+--
+-- @return:
+--   The API key.
+-- @usage srv:getApiKey()
 function M:getApiKey()
   return self.apiKey
 end
 
 --- Get current API server URL.
+--
+-- @return:
+--   The API server URL.
+-- @usage srv:getApiServerUrl()
 function M:getApiServerUrl()
   return self.apiServer
 end
 
 --- Get the API version the server manager is using.
+--
+-- @return:
+--   The API version.
+-- @usage srv:getApiVersion()
 function M:getApiVersion()
   return self.apiVersion
 end
 
 --- Get the client application ID.
+--
+-- @return:
+--   The application ID.
+-- @usage srv:getAppId()
 function M:getAppId()
   return self.appId
 end
 
 --- Get current render server URL.
+--
+-- @return:
+--   The render server URL.
+-- @usage srv:getRenderServerUrl()
 function M:getRenderServerUrl()
   return self.renderServer
 end
@@ -138,7 +161,7 @@ end
 --       is supported. Default: 1
 -- @return
 --   A server object.
--- @usage srv = servermanager:new(inParameters)
+-- @usage srv = ServerManager(inParameters)
 function M.new(inParameters)
   local params = inParameters
   local server = {}
@@ -175,17 +198,17 @@ end
 -- PRIVATE METHODS
 
 --- Construct a URL with all user supplied and constructed parameters
-function _buildRenderServerQueryParams(self, inParameters)
-  local accessInfo = inParameters.product:getAccessInfo()
-  params = _deepcopy(self, accessInfo.renderAccessParameters)
-  if type(inParameters.renderParameters) == 'table' then
-    for key, value in pairs(inParameters.renderParameters) do
+function _buildRenderServerQueryParams(self, params)
+  local accessInfo = params.product:getAccessInfo()
+  local queryParams = _deepcopy(self, accessInfo.renderAccessParameters)
+  if type(params.renderParameters) == 'table' then
+    for key, value in pairs(params.renderParameters) do
       if value then
-        params[key] = value
+        queryParams[key] = value
       end
     end
   end
-  return params
+  return queryParams
 end
 
 --- Recursively copy a table's contents, including metatables.
@@ -205,6 +228,7 @@ function _deepcopy(self, t)
   return res
 end
 
+--- Extract the information from a server JSON response.
 function _extractInfo(self, data)
   local json = _parseJson(self, data)
   if json.result and json.result.result_num and json.result.result_num == 0 then
@@ -213,6 +237,7 @@ function _extractInfo(self, data)
   return false
 end
 
+--- Extract the result from a server JSON response.
 function _extractResult(self, data)
   local json = _parseJson(self, data)
   if json.result and json.result.result_num and json.result.result_text then
@@ -287,6 +312,7 @@ function _parseJson(self, jsonString)
   end
 end
 
+--- Handles setting up product access info and building render params.
 function _processAccessToken(self, params, data)
   local accessInfo = {}
 
@@ -305,6 +331,7 @@ function _processAccessToken(self, params, data)
   return _buildRenderServerQueryParams(self, params)
 end
 
+--- Sends a command to the API server.
 function _sendApiCommand(self, inParameters, retry)
   params = inParameters
   local url = self:getApiServerUrl() .. params.command
