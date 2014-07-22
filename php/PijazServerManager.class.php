@@ -1,5 +1,29 @@
 <?php
 
+/**
+ * PUBLIC METHODS:
+ *
+ * __construct($inParameters)
+ * buildRenderCommand($inParameters)
+ * buildRenderServerUrlRequest($inParamaters)
+ * getApiKey()
+ * getApiServerUrl()
+ * getApiVersion()
+ * getAppId()
+ * getRenderServerUrl()
+ * sendApiCommand($inParameters)
+ *
+ * PRIVATE METHODS:
+ *
+ * _buildRenderServerQueryParams($params)
+ * _extractInfo($data)
+ * _extractResult($data)
+ * _httpRequest($url, $headers, $method, $data, $retry)
+ * _isRenderRequestAllowed($product)
+ * _processAccessToken($params, $data)
+ * _sendApiCommand($params, $retry)
+ */
+
 define("PIJAZ_API_VERSION", "1");
 define("PIJAZ_API_SERVER", "http://api.pijaz.com/");
 define("PIJAZ_RENDER_SERVER", "http://render.pijaz.com/");
@@ -37,6 +61,10 @@ class PijazServerManager {
   public $appId;
   public $apiKey;
 
+  /**
+   * PUBLIC METHODS.
+   */
+
   public function __construct($inParameters) {
     $params = (object) $inParameters;
     $this->appId = $params->appId;
@@ -53,6 +81,168 @@ class PijazServerManager {
     if (isset($params->apiVersion)) {
       $this->apiVersion = $params->apiVersion;
     }
+  }
+
+  /**
+   * Build the set of query parameters for a render request.
+   *
+   * inParameters: An object with the following key/value pairs.
+   *
+   *   product: An instance of the PijazProduct class
+   *   renderParameters: An object of all params sent to the render request.
+   *
+   * Return:
+   *     If successful, an object of query parameters to pass to the rendering
+   *     server. These can be converted into a full URL by calling
+   *     buildRenderServerUrlRequest(params).
+   */
+  public function buildRenderCommand($inParameters) {
+    $params = (object) $inParameters;
+    if ($this->_isRenderRequestAllowed($params->product)) {
+      return $this->_buildRenderServerQueryParams($params);
+    } else {
+      $commandParameters = new stdClass();
+      $commandParameters->workflow = $params->renderParameters->workflow;
+      if (isset($params->renderParameters->xml)) {
+        $commandParameters->xml = $params->renderParameters->xml;
+      }
+      $options = new stdClass();
+      $options->command = 'get-token';
+      $options->commandParameters = $commandParameters;
+      $result = $this->sendApiCommand($options);
+      if ($result->success) {
+        return $this->_processAccessToken($params, $result->data);
+      }
+    }
+  }
+
+  /*
+   * Builds a fully qualified render request URL.
+   *
+   * Parameters:
+   *   inParameters: An object of query parameters for the render request.
+   *
+   * Return:
+   *   The constructed URL.
+   */
+  public function buildRenderServerUrlRequest($inParameters) {
+    $url = $this->getRenderServerUrl() . "render-image?" . http_build_query($inParameters);
+    return $url;
+  }
+
+  /**
+   * Get the API key of the client application.
+   *
+   * Return:
+   *   The client API key.
+   */
+  public function getApiKey() {
+    return $this->apiKey;
+  }
+
+  /**
+   * Get current API server URL.
+   *
+   * Return:
+   * The API server URL.
+   */
+  public function getApiServerUrl() {
+    return $this->apiServer;
+  }
+
+  /**
+   * Get the API version the server manager is using.
+   *
+   * Return:
+   *   The API version.
+   */
+  public function getApiVersion() {
+    return $this->apiVersion;
+  }
+
+  /**
+   * Get the client application ID.
+   *
+   * Return:
+   *   The application ID.
+   */
+  public function getAppId() {
+    return $this->appId;
+  }
+
+  /**
+   * Get current render server URL.
+   *
+   * Return:
+   *   The render server URL.
+   */
+  public function getRenderServerUrl() {
+    return $this->renderServer;
+  }
+
+  /**
+   * Send a command to the API server.
+   *
+   * inParameters: An object with the following key/value pairs.
+   *
+   *   command: Required. The command to send to the API server. One of the
+   *     following:
+   *       get-token: Retrieve a rendering access token for a workflow.
+   *         commandParameters:
+   *           workflow: The workflow ID.
+   *
+   *   commandParameters: Optional. An object of parameters. See individual
+   *     command for more information
+   *   method: Optional. The HTTP request type. Default: GET
+   *
+   * Return:
+   *   An object with the following key/value pairs;
+   *     success: TRUE if the request succeed, FALSE otherwise.
+   *     data: If the request was successful, an object containing the
+   *     response data, if not, a string containing the error message.
+   */
+  public function sendApiCommand($inParameters) {
+    return $this->_sendApiCommand($inParameters, SERVER_REQUEST_ATTEMPTS - 1);
+  }
+
+  /**
+   * PRIVATE METHODS.
+   */
+
+  /*
+   * Construct a URL with all user supplied and constructed parameters
+   */
+  private function _buildRenderServerQueryParams($params) {
+    $accessInfo = $params->product->getAccessInfo();
+    $queryParams = clone $accessInfo->renderAccessParameters;
+    if (is_object($params->renderParameters)) {
+      foreach ($params->renderParameters as $key => $value) {
+        $queryParams->$key = $value;
+      }
+    }
+    return $queryParams;
+  }
+
+  /**
+   * Extract the information from a server JSON response.
+   */
+  private function _extractInfo($data) {
+    $json = json_decode($data);
+    if (isset($json->result->result_num) && $json->result->result_num == 0) {
+      return $json->info;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Extract the result from a server JSON response.
+   */
+  private function _extractResult($data) {
+    $json = json_decode($data);
+    if (isset($json->result->result_num) && isset($json->result->result_text)) {
+      return $json->result;
+    }
+    return FALSE;
   }
 
   /**
@@ -78,7 +268,7 @@ class PijazServerManager {
    *   An object containing the HTTP request headers, response code, headers,
    *   data and redirect status.
    */
-  public function httpRequest($url, $headers = array(), $method = 'GET', $data = NULL, $retry = 3) {
+  private function _httpRequest($url, $headers = array(), $method = 'GET', $data = NULL, $retry = 3) {
     $result = new stdClass();
 
     // Parse the URL and make sure we can handle the schema.
@@ -205,7 +395,7 @@ class PijazServerManager {
         $location = $result->headers['Location'];
 
         if ($retry) {
-          $result = $this->httpRequest($result->headers['Location'], $headers, $method, $data, --$retry);
+          $result = $this->_httpRequest($result->headers['Location'], $headers, $method, $data, --$retry);
           $result->redirect_code = $result->code;
         }
         $result->redirect_url = $location;
@@ -220,97 +410,46 @@ class PijazServerManager {
     return $result;
   }
 
-  private function extractInfo($data) {
-    $json = json_decode($data);
-    if (isset($json->result->result_num) && $json->result->result_num == 0) {
-      return $json->info;
+  /**
+   * Verifies that valid access parameters are attached to the product.
+   */
+  private function _isRenderRequestAllowed($product) {
+    $accessInfo = $product->getAccessInfo();
+    if (!empty($accessInfo)) {
+      $expire_timestamp = $accessInfo->timestamp + $accessInfo->lifetime - $this->refreshFuzzSeconds;
+      if (time() <= $expire_timestamp) {
+        return TRUE;
+      }
     }
     return FALSE;
   }
 
-  private function extractResult($data) {
-    $json = json_decode($data);
-    if (isset($json->result->result_num) && isset($json->result->result_text)) {
-      return $json->result;
-    }
-    return FALSE;
+  /**
+   * Handles setting up product access info and building render params.
+   */
+  private function _processAccessToken($params, $data) {
+    $accessInfo = new stdClass();
+
+    // Store the time the access params were obtained -- used to count
+    // against the lifetime param to expire the object.
+    $accessInfo->timestamp = time();
+    // Extract the lifetime param, no need to pass this along to the
+    // rendering server.
+    $accessInfo->lifetime = (int) $data->lifetime;
+    unset($data->lifetime);
+
+    $accessInfo->renderAccessParameters = $data;
+
+    $params->product->setAccessInfo($accessInfo);
+
+    return $this->_buildRenderServerQueryParams($params);
   }
 
   /**
-   * Method: getApiVersion
-   *
-   * Get the API version the server manager is using.
+   * Sends a command to the API server.
    */
-  public function getApiVersion() {
-    return $this->apiVersion;
-  }
-
-
-  /**
-   * Method: getRenderServerUrl
-   *
-   * Get current render server URL.
-   */
-  public function getRenderServerUrl() {
-    return $this->renderServer;
-  }
-
-  /**
-   * Method: getApiServerUrl
-   *
-   * Get current API server URL.
-   */
-  public function getApiServerUrl() {
-    return $this->apiServer;
-  }
-
-  /**
-   * Method: getAppId
-   *
-   * Get the client application ID.
-   */
-  public function getAppId() {
-    return $this->appId;
-  }
-
-  /**
-   * Method: getApiKey
-   *
-   * Get the API key of the client application.
-   */
-  public function getApiKey() {
-    return $this->apiKey;
-  }
-
-  /**
-   * Method: sendApiCommand
-   *
-   * Send a command to the API server.
-   *
-   * inParameters: An object with the following key/value pairs.
-   *
-   *   command: Required. The command to send to the API server. One of the
-   *     following:
-   *       get-token: Retrieve a rendering access token for a workflow.
-   *         commandParameters:
-   *           workflow: The workflow ID.
-   *
-   *   commandParameters: Optional. An object of parameters. See individual
-   *     command for more information
-   *   method: Optional. The HTTP request type. Default: GET
-   *
-   * Return:
-   *   An object with the following key/value pairs;
-   *     success: TRUE if the request succeed, FALSE otherwise.
-   *     data: If the request was successful, an object containing the
-   *     response data, if not, a string containing the error message.
-   */
-  public function sendApiCommand($inParameters) {
-    return $this->_sendApiCommand($inParameters, SERVER_REQUEST_ATTEMPTS - 1);
-  }
-
-  private function _sendApiCommand($inParameters, $retry) {
-    $params = (object) $inParameters;
+  private function _sendApiCommand($params, $retry) {
+    $params = (object) $params;
     $url = $this->getApiServerUrl() . $params->command;
     $method = isset($params->method) ? strtoupper($params->method) : 'GET';
 
@@ -329,15 +468,15 @@ class PijazServerManager {
     else {
       $data = $query;
     }
-    $result = $this->httpRequest($url, array(), $method, $data);
+    $result = $this->_httpRequest($url, array(), $method, $data);
 
     $return = new stdClass();
 
     if ($result->code == 200) {
-      $json_result = $this->extractResult($result->data);
+      $json_result = $this->_extractResult($result->data);
       if ($json_result->result_num == 0) {
         $return->success = TRUE;
-        $return->data = $this->extractInfo($result->data);
+        $return->data = $this->_extractInfo($result->data);
       }
       else {
         $return->success = FALSE;
@@ -361,100 +500,6 @@ class PijazServerManager {
         return $return;
       }
     }
-  }
-
-  /**
-   * Method:  buildRenderCommand
-   *
-   * Build the set of query parameters for a render request.
-   *
-   * inParameters: An object with the following key/value pairs.
-   *
-   *   product: An instance of the PijazProduct class
-   *   renderParameters: An object of all params sent to the render request.
-   *
-   * Return:
-   *     If successful, an object of query parameters to pass to the rendering
-   *     server. These can be converted into a full URL by calling
-   *     buildRenderServerUrlRequest(params).
-   */
-  public function buildRenderCommand($inParameters) {
-    $params = (object) $inParameters;
-    if ($this->_isRenderRequestAllowed($params->product)) {
-      return $this->_buildRenderServerQueryParams($params);
-    } else {
-      $commandParameters = new stdClass();
-      $commandParameters->workflow = $params->renderParameters->workflow;
-      if (isset($params->renderParameters->xml)) {
-        $commandParameters->xml = $params->renderParameters->xml;
-      }
-      $options = new stdClass();
-      $options->command = 'get-token';
-      $options->commandParameters = $commandParameters;
-      $result = $this->sendApiCommand($options);
-      if ($result->success) {
-        return $this->_processAccessToken($params, $result->data);
-      }
-    }
-  }
-
-  private function _processAccessToken($params, $data) {
-    $accessInfo = new stdClass();
-
-    // Store the time the access params were obtained -- used to count
-    // against the lifetime param to expire the object.
-    $accessInfo->timestamp = time();
-    // Extract the lifetime param, no need to pass this along to the
-    // rendering server.
-    $accessInfo->lifetime = (int) $data->lifetime;
-    unset($data->lifetime);
-
-    $accessInfo->renderAccessParameters = $data;
-
-    $params->product->setAccessInfo($accessInfo);
-
-    return $this->_buildRenderServerQueryParams($params);
-  }
-
-  /*
-   * Construct a URL with all user supplied and constructed parameters
-   */
-  private function _buildRenderServerQueryParams($inParameters) {
-    $accessInfo = $inParameters->product->getAccessInfo();
-    $params = clone $accessInfo->renderAccessParameters;
-    if (is_object($inParameters->renderParameters)) {
-      foreach ($inParameters->renderParameters as $key => $value) {
-        $params->$key = $value;
-      }
-    }
-    return $params;
-  }
-
-  /*
-   * Method: buildRenderServerUrlRequest
-   *
-   * Builds a fully qualified render request URL.
-   *
-   * Parameters:
-   *   params: An object of query parameters for the render request.
-   */
-  public function buildRenderServerUrlRequest($params) {
-    $url = $this->getRenderServerUrl() . "render-image?" . http_build_query($params);
-    return $url;
-  }
-
-  /*
-   * Verifies that valid access parameters are attached to the product.
-   */
-  public function _isRenderRequestAllowed($product) {
-    $accessInfo = $product->getAccessInfo();
-    if (!empty($accessInfo)) {
-      $expire_timestamp = $accessInfo->timestamp + $accessInfo->lifetime - $this->refreshFuzzSeconds;
-      if (time() <= $expire_timestamp) {
-        return TRUE;
-      }
-    }
-    return FALSE;
   }
 }
 
