@@ -133,17 +133,6 @@ Parameters:
  * **additionalParams**: *Optional*. An object of additional render parameters to be used for this request only.
 
 
-###### Method: serve(additionalParams)
-
-Convenience method for serving a product directly to a browser.
-
-This takes care of generating the render URL, making the request to the render server for the product, and passing the result to the browser.
-
-Parameters:
-
- * **additionalParams**: *Optional*. An object of additional render parameters to be used for this request only.
-
-
 ### Code examples
 
 The examples directory contains example code for each of the languages the SDK supports.
@@ -151,7 +140,7 @@ The examples directory contains example code for each of the languages the SDK s
 
 ### Direct server APIs
 
-If you wish to communicate direclty with the api server and render servers, this section describes the available services.  Most are accomplished via http GET requests.
+If you wish to communicate directly with the API server and render servers, this section describes the available services.  Most are accomplished via http GET requests.
 
 The most typical scenario is this:
 
@@ -183,7 +172,7 @@ Parameters:
 Example:
 
 ```
-http://api.pijaz.com/get-token?workflow=web.17&app_id=10&api_version=1&request_id=1ab64ad4-3ac0-4424-ade3-552e6864d995&_jsonp_callback=_prototypeJSONPCallback_2
+http://api.pijaz.com/get-token?workflow=web.17&app_id=10&api_version=1&request_id=1ab64ad4-3ac0-4424-ade3-552e6864d995
 ```
 
 

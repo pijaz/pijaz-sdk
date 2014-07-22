@@ -40,6 +40,10 @@ Parameters:
 
 ###### Method: serve(response, additionalParams, callback)
 
+Convenience method for serving a product directly to a browser.
+
+This takes care of generating the render URL, making the request to the render server for the product, and passing the result to the browser.
+
 Parameters:
 
  * **response**: *Required*. The request response object.
