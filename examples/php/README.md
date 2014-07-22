@@ -1,7 +1,7 @@
 PHP example application
 ===========================
 
-This example application showcases the basics of using the Pijaz SDK in PHP.
+This example application showcases the basics of using the Pijaz SDK in [PHP](https://php.net).
 
 
 ### Initial platform setup

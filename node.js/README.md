@@ -1,7 +1,7 @@
 Pijaz node.js SDK
 =================
 
-Pijaz SDK for node.js.
+Pijaz SDK for [node.js](http://nodejs.org).
 
 
 ### Initial platform setup

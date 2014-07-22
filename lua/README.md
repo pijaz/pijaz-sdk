@@ -1,7 +1,7 @@
 Pijaz PHP Lua
 =================
 
-Pijaz SDK for Lua.
+Pijaz SDK for [Lua](http://www.lua.org).
 
 
 ### Initial platform setup

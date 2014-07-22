@@ -1,7 +1,7 @@
 Lua example application
 ===========================
 
-This example application showcases the basics of using the Pijaz SDK in Lua.
+This example application showcases the basics of using the Pijaz SDK in [Lua](http://www.lua.org).
 
 
 ### Initial platform setup

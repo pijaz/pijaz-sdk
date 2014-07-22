@@ -1,7 +1,7 @@
 Pijaz PHP SDK
 =================
 
-Pijaz SDK for PHP.
+Pijaz SDK for [PHP](https://php.net).
 
 
 ### Initial platform setup

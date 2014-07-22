@@ -1,7 +1,7 @@
 node.js example application
 ===========================
 
-This example application showcases the basics of using the Pijaz SDK in node.js.
+This example application showcases the basics of using the Pijaz SDK in [node.js](http://nodejs.org).
 
 
 ### Initial platform setup

@@ -39,9 +39,9 @@ Custom themes are created and registered in our [Theme designer](http://develope
 
 The SDK currently supports the following languages:
 
- * Lua
- * node.js
- * PHP
+ * [Lua](http://www.lua.org)
+ * [node.js](http://nodejs.org)
+ * [PHP](https://php.net)
 
 An browser-based implementation is also available, which can be used client side for public themes.
 
