@@ -1,7 +1,7 @@
 pijaz-sdk
 =========
 
-Welcome to the pijaz SDK.  
+Welcome to the pijaz SDK.
 
 This software development kit allows end users to leverage the [Pijaz](http://pijaz.com) Synthesizer Platform to produce custom digital products.
 
@@ -15,7 +15,7 @@ Some pijaz products are considered public where anyone is allowed to ask the pij
 
 ### Instant gratification:  Using public pijaz products
 
-To see a simple example of creating personalized images from public products, open the examples/example.html file in a browser and try a few messages.  Look at the html source to see how the page uses the pijaz javascript libraries to communicate with the pijaz cloud servers.
+To see a simple example of creating personalized images from public products, visit the [Sample theme](http://developer.pijaz.com/#sample-theme) in a browser and try a few messages.
 
 ### Initial platform setup
 
@@ -39,7 +39,11 @@ Custom themes are created and registered in our [Theme designer](http://develope
 
 The SDK currently supports the following languages:
 
+ * Lua
  * node.js
+ * PHP
+
+An browser-based implementation is also available, which can be used client side for public themes.
 
 More information about each supported language can be found in the README file under each language's subdirectory.
 
