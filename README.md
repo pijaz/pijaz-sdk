@@ -42,6 +42,7 @@ The SDK currently supports the following languages:
  * [Lua](http://www.lua.org)
  * [node.js](http://nodejs.org)
  * [PHP](https://php.net)
+ * [Python](https://www.python.org)
 
 An browser-based implementation is also available, which can be used client side for public themes.
 

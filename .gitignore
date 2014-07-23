@@ -1,4 +1,5 @@
 .DS_Store
+*.pyc
 *.swp
 examples/browser/js/config.js
 examples/browser/js/iclass.js
@@ -16,4 +17,7 @@ examples/node.js/node_modules/
 examples/php/config.php
 examples/php/PijazProduct.class.php
 examples/php/PijazServerManager.class.php
+examples/python/config.py
+examples/python/pijaz_product.py
+examples/python/pijaz_server_manager.py
 node.js/node_modules/
