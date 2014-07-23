@@ -34,6 +34,6 @@ define('IMAGE_FILEPATH', '/tmp/hello-world-file.jpg');
  * not be edited.
  */
 // Fully qualified URL of the rendering server, include the trailing slash.
-define('RENDER_SERVER_URL', 'http://localhost:4002/');
+define('RENDER_SERVER_URL', 'http://render.pijaz.com/');
 // Fully qualified URL of the API server, include the trailing slash.
-define('API_SERVER_URL', 'http://localhost:4001/');
+define('API_SERVER_URL', 'http://api.pijaz.com/');
