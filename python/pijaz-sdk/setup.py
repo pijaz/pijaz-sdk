@@ -8,8 +8,8 @@ requires = [
   'requests==2.3.0',
 ]
 
-setuptools.setup(name='pijaz_sdk',
-  version='0.2',
+setuptools.setup(name='pijaz-sdk',
+  version='0.1',
   description='Pijaz Platform Software Development Kit',
   long_description=README,
   classifiers=[

@@ -5,10 +5,10 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(HERE, 'README.md')).read()
 
 requires = [
-  'pijaz_sdk==0.2',
+  'pijaz-sdk==0.1',
 ]
 
-setuptools.setup(name='pijaz_sdk_example',
+setuptools.setup(name='pijaz-sdk-example',
   version='0.1',
   description='Pijaz Platform Software Development Kit Example Application',
   long_description=README,
