@@ -3,7 +3,7 @@ Pijaz Python SDK
 
 Pijaz SDK for [Python](https://www.python.org)
 
-The SDK is available as a [Python package](https://pypi.python.org/pypi/pijaz_sdk)
+The SDK is available as a [Python package](https://pypi.python.org/pypi/pijaz-sdk)
 
 
 ### Initial platform setup
