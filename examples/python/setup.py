@@ -1,0 +1,34 @@
+import os
+import setuptools
+
+HERE = os.path.abspath(os.path.dirname(__file__))
+README = open(os.path.join(HERE, 'README.md')).read()
+
+requires = [
+  'pijaz_sdk==0.2',
+]
+
+setuptools.setup(name='pijaz_sdk_example',
+  version='0.1',
+  description='Pijaz Platform Software Development Kit Example Application',
+  long_description=README,
+  classifiers=[
+    "Programming Language :: Python",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Artistic Software",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Multimedia :: Graphics :: Editors",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+  ],
+  author='Chad Phillips',
+  author_email='chad@pijaz.com',
+  url='',
+  keywords='pijaz graphics sdk synthesizer platform',
+  packages=setuptools.find_packages(),
+  include_package_data=True,
+  zip_safe=False,
+  install_requires=requires,
+)
+

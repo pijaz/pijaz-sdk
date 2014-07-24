@@ -18,5 +18,7 @@ examples/php/config.php
 examples/php/PijazProduct.class.php
 examples/php/PijazServerManager.class.php
 examples/python/config.py
-examples/python/pijaz
+examples/python/pijaz_sdk_example.egg-info/
 node.js/node_modules/
+python/pijaz_sdk/dist/
+python/pijaz_sdk/pijaz_sdk.egg-info/
