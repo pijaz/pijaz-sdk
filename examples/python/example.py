@@ -4,8 +4,8 @@
 """
 
 import config
-import pijaz_server_manager
-import pijaz_product
+from pijaz.server_manager import PijazServerManager
+from pijaz.product import PijazProduct
 
 # Set up the server class.
 serverOptions = {
@@ -14,14 +14,14 @@ serverOptions = {
  'apiServer': config.API_SERVER_URL,
  'renderServer': config.RENDER_SERVER_URL,
 }
-server = pijaz_server_manager.PijazServerManager(serverOptions)
+server = PijazServerManager(serverOptions)
 
 # Set up the product class.
 productOptions = {
   'serverManager': server,
   'workflowId': config.WORKFLOW_ID,
 }
-product = pijaz_product.PijazProduct(productOptions)
+product = PijazProduct(productOptions)
 
 # Any user-generated product must include the 'xml' render parameter, which
 # is the fully qualified URL to the XML file used to generate the product.

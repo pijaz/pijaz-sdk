@@ -11,7 +11,7 @@ See [Initial platform setup](https://github.com/pijaz/pijaz-sdk#initial-platform
 
 ### Application configuration
 
-* Make sure pijaz_server_manager.py and pijaz_product.py are in your Python's include path.
+* Make sure the pijaz SDK module is in your Python's include path.
 * Navigate to the same directory as this README file.
 * Copy config.sample.py to config.py
 * Edit the client application settings section of config.py, inserting the values for your configured application.

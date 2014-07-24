@@ -18,6 +18,5 @@ examples/php/config.php
 examples/php/PijazProduct.class.php
 examples/php/PijazServerManager.class.php
 examples/python/config.py
-examples/python/pijaz_product.py
-examples/python/pijaz_server_manager.py
+examples/python/pijaz
 node.js/node_modules/
