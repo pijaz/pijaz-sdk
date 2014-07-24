@@ -11,11 +11,12 @@ See [Initial platform setup](https://github.com/pijaz/pijaz-sdk#initial-platform
 
 ### Application configuration
 
-* Make sure pijaz.lua, pijaz_server_manager.lua and pijaz_product.lua are in your Lua's include path.
 * Navigate to the same directory as this README file.
 * Copy config.sample.lua to config.lua
 * Edit the client application settings section of config.lua, inserting the values for your configured application.
 * Edit the product settings section of config.lua. The example application expects a workflow that's identical to the 'Hello World' sample workflow created in the Theme designer.
+* Install [Luarocks](http://luarocks.org), Lua's package management system.
+* Run `luarocks install pijaz-sdk` -- this will install the SDK and all its dependencies.
 
 
 ### Running the application

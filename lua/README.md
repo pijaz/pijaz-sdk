@@ -3,6 +3,8 @@ Pijaz PHP Lua
 
 Pijaz SDK for [Lua](http://www.lua.org).
 
+The SDK is available as a [Luarocks package](https://rocks.moonscript.org/modules/thehunmonkgroup/pijaz-sdk)
+
 
 ### Initial platform setup
 

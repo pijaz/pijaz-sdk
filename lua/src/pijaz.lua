@@ -11,8 +11,8 @@ Product
 
 ]]
 
-local ServerManager = require "pijaz_server_manager"
-local Product = require "pijaz_product"
+local ServerManager = require "pijaz.server_manager"
+local Product = require "pijaz.product"
 
 return {
   ServerManager = ServerManager,
