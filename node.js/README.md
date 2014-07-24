@@ -3,6 +3,8 @@ Pijaz node.js SDK
 
 Pijaz SDK for [node.js](http://nodejs.org).
 
+The SDK is available as an [NPM package](https://www.npmjs.org/package/pijaz-sdk)
+
 
 ### Initial platform setup
 
