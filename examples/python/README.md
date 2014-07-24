@@ -12,10 +12,10 @@ See [Initial platform setup](https://github.com/pijaz/pijaz-sdk#initial-platform
 ### Application configuration
 
 * Navigate to the same directory as this README file.
+* Run `python setup.py develop`. This will install the SDK and all dependencies. It's recommended that you do this in a [virtualenv](http://virtualenv.readthedocs.org/en/latest).
 * Copy config.sample.py to config.py
 * Edit the client application settings section of config.py, inserting the values for your configured application.
 * Edit the product settings section of config.py. The example application expects a workflow that's identical to the 'Hello World' sample workflow created in the Theme designer.
-* Run `python setup.py develop`. This will install the SDK and all dependencies. It's recommended that you do this in a [virtualenv](http://virtualenv.readthedocs.org/en/latest).
 
 
 ### Running the application
