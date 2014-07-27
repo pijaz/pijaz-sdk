@@ -1,4 +1,4 @@
-Pijaz PHP Lua
+Pijaz Lua SDK
 =================
 
 Pijaz SDK for [Lua](http://www.lua.org).

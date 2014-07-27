@@ -142,7 +142,7 @@ function M:getRenderServerUrl()
   return self.renderServer
 end
 
---- Create a new instance of the product class.
+--- Create a new instance of the server manager class.
 --
 -- @param inParameters
 --   A table with the following key/value pairs.
