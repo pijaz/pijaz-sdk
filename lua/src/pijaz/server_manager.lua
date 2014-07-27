@@ -18,7 +18,7 @@ sendApiCommand(inParameters)
 
 PRIVATE METHODS:
 
-_buildRenderServerQueryParams(params)
+_buildRenderServerQueryParams(self, params)
 _deepcopy(self, t)
 _extractInfo(self, data)
 _extractResult(self, data)
