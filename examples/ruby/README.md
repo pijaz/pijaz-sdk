@@ -12,7 +12,7 @@ See [Initial platform setup](https://github.com/pijaz/pijaz-sdk#initial-platform
 ### Application configuration
 
 * Install [RubyGems](https://rubygems.org), Ruby's package management system.
-* Run `gem install pijaz-sdk` -- this will install the SDK and all its dependencies.
+* Run `gem install pijaz-sdk json` -- this will install the SDK and all its dependencies.
 * Navigate to the same directory as this README file.
 * Copy config.sample.rb to config.rb
 * Edit the client application settings section of config.rb, inserting the values for your configured application.

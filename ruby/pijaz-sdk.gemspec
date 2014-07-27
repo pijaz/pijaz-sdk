@@ -8,5 +8,6 @@ Gem::Specification.new do |s|
   s.email       = 'chad@pijaz.com'
   s.files       = ["lib/pijaz-sdk.rb", "lib/pijaz/product.rb", "lib/pijaz/server_manager.rb"]
   s.homepage    = 'https://github.com/pijaz/pijaz-sdk'
-  s.license       = 'MIT'
+  s.license      = 'MIT'
+  s.add_runtime_dependency('json', '>= 1.8.1')
 end
