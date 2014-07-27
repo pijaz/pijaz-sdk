@@ -16,6 +16,7 @@ examples/php/PijazProduct.class.php
 examples/php/PijazServerManager.class.php
 examples/python/config.py
 examples/python/pijaz_sdk_example.egg-info/
+examples/ruby/config.rb
 node.js/node_modules/
 python/pijaz-sdk/dist/
 python/pijaz-sdk/pijaz_sdk.egg-info/
