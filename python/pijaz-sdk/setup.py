@@ -5,7 +5,7 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(HERE, 'README.md')).read()
 
 requires = [
-  'requests==2.3.0',
+  'requests==2.20.0',
 ]
 
 setuptools.setup(name='pijaz-sdk',
