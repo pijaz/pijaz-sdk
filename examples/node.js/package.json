@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "request": "2.34.0",
-    "underscore": "1.6.0",
+    "underscore": "1.13.8",
     "pijaz-sdk": "0.0.1"
   },
   "engines": {
